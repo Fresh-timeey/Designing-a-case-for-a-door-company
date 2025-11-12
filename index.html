@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>АИС "Заказ и установка дверей"</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="door-icon.png">
+</head>
+<body>
+
+  <!-- ШАПКА -->
+  <header>
+    <div class="header-content">
+      <img src="door-icon.png" alt="Door Icon" class="logo">
+      <h1>АИС "Заказ и установка дверей"</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><button class="nav-btn" data-page="welcome">Главная</button></li>
+        <li><button class="nav-btn" data-page="view">Мои заказы</button></li>
+        <li><button class="nav-btn" data-page="support">Поддержка</button></li>
+        <li><button id="adminBtn">Администратор</button></li>
+        <li><button id="errorBtn">Ошибка</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ОСНОВНОЙ КОНТЕНТ -->
+  <main id="content">
+
+    <!-- ГЛАВНАЯ (авторизация + заказ) -->
+    <section id="welcome" class="page active">
+      <h2>Добро пожаловать!</h2>
+      <p>Здравствуйте! Вы находитесь в системе заказа и установки дверей.  
+      Авторизуйтесь и оформите заказ прямо сейчас.</p>
+
+      <div class="two-columns">
+        <!-- Форма авторизации -->
+        <div class="auth-block">
+          <h3>Форма авторизации</h3>
+          <form>
+            <label>Логин:</label>
+            <input type="text" placeholder="Введите логин">
+            <label>Пароль:</label>
+            <input type="password" placeholder="Введите пароль">
+            <button type="submit">Войти</button>
+            <p class="note">* форма не требует реальных данных, демонстрационная версия</p>
+          </form>
+        </div>
+
+        <!-- Форма заказа -->
+        <div class="order-block">
+          <h3>Сделать заказ</h3>
+          <form>
+            <label>Тип двери:</label>
+            <select>
+              <option>Металлическая</option>
+              <option>Деревянная</option>
+              <option>Пластиковая</option>
+            </select>
+
+            <label>Размер (см):</label>
+            <input type="text" placeholder="200x90">
+
+            <label>Адрес установки:</label>
+            <input type="text" placeholder="г. Москва, ул. Примерная, д. 5">
+
+            <label>Способ оплаты:</label>
+            <select>
+              <option>Наличные мастеру</option>
+              <option>Безналичный перевод</option>
+              <option>Переносная касса</option>
+            </select>
+
+            <button type="submit">Оформить заказ</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ПРОСМОТР ЗАКАЗОВ -->
+    <section id="view" class="page">
+      <h2>Мои заказы</h2>
+      <form>
+        <label>Введите номер заказа:</label>
+        <input type="text" placeholder="ORD-001">
+        <button>Проверить</button>
+      </form>
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Тип двери</th><th>Статус</th><th>Дата</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ORD-123</td><td>Металлическая</td><td>В работе</td><td>10.11.2025</td></tr>
+          <tr><td>ORD-124</td><td>Деревянная</td><td>Установлена</td><td>08.11.2025</td></tr>
+        </tbody>
+      </table>
+      <div class="table-controls">
+        <button>Сортировать по дате</button>
+        <button>Фильтр: Активные</button>
+      </div>
+    </section>
+
+    <!-- ПОДДЕРЖКА -->
+    <section id="support" class="page">
+      <h2>Служба поддержки</h2>
+      <p>Если у вас есть вопросы, заполните форму ниже — наш оператор свяжется с вами.</p>
+      <form>
+        <label>Ваше имя:</label>
+        <input type="text" placeholder="Введите имя">
+        <label>Email:</label>
+        <input type="email" placeholder="Введите email">
+        <label>Сообщение:</label>
+        <textarea placeholder="Опишите проблему..."></textarea>
+        <button>Отправить сообщение</button>
+      </form>
+    </section>
+
+    <!-- ОШИБКА -->
+    <section id="error" class="page">
+      <h2>Ошибка 404</h2>
+      <p>Страница не найдена. <a href="#" id="backHome">Вернуться на главную</a></p>
+    </section>
+
+  </main>
+
+  <!-- ПАНЕЛЬ АДМИНИСТРАТОРА -->
+  <div id="adminPanel">
+    <div class="admin-content">
+      <h2>Панель администратора</h2>
+      <form>
+        <label>Имя пользователя:</label>
+        <input type="text" placeholder="Введите имя">
+        <label>Email:</label>
+        <input type="email" placeholder="Введите email">
+        <button>Добавить</button>
+        <button>Редактировать</button>
+        <button>Удалить</button>
+      </form>
+      <button id="closeAdmin">Закрыть</button>
+    </div>
+  </div>
+
+  <!-- ПОДВАЛ -->
+  <footer>
+    <p>© 2025 АИС "Заказ и установка дверей". Все права защищены.</p>
+  </footer>
+
+  <!-- СКРИПТ -->
+  <script>
+    const pages = document.querySelectorAll('.page');
+    const navBtns = document.querySelectorAll('.nav-btn');
+    const errorSection = document.getElementById('error');
+
+    navBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const page = btn.dataset.page;
+        pages.forEach(p => p.classList.remove('active'));
+        document.getElementById(page).classList.add('active');
+      });
+    });
+
+    const adminPanel = document.getElementById('adminPanel');
+    document.getElementById('adminBtn').addEventListener('click', () => {
+      adminPanel.classList.add('visible');
+    });
+    document.getElementById('closeAdmin').addEventListener('click', () => {
+      adminPanel.classList.remove('visible');
+    });
+
+    document.getElementById('errorBtn').addEventListener('click', () => {
+      pages.forEach(p => p.classList.remove('active'));
+      errorSection.classList.add('active');
+    });
+    document.getElementById('backHome').addEventListener('click', (e) => {
+      e.preventDefault();
+      errorSection.classList.remove('active');
+      document.getElementById('welcome').classList.add('active');
+    });
+  </script>
+
+</body>
+</html>

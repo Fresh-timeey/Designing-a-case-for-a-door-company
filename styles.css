@@ -1,0 +1,156 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f7f9;
+  margin: 0;
+  padding: 0;
+}
+
+header, footer {
+  background: #003c5a;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 0;
+}
+
+nav button {
+  background: none;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+nav button:hover {
+  text-decoration: underline;
+}
+
+.page {
+  display: none;
+  background: white;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.page.active {
+  display: block;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input, select, textarea, button {
+  padding: 8px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  background: #003c5a;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #005d87;
+}
+
+.two-columns {
+  display: flex;
+  gap: 30px;
+  justify-content: space-between;
+}
+
+.auth-block, .order-block {
+  flex: 1;
+  background: #f9fafc;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}
+
+.note {
+  font-size: 0.8em;
+  color: #666;
+}
+
+/* Таблица заказов */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+th {
+  background: #eee;
+}
+
+/* Панель администратора */
+#adminPanel {
+  position: fixed;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 60, 90, 0.95);
+  color: white;
+  transition: top 0.4s ease-in-out;
+  padding: 20px;
+  text-align: center;
+  z-index: 100;
+}
+
+#adminPanel.visible {
+  top: 0;
+}
+
+#adminPanel form {
+  background: white;
+  color: black;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 0 auto;
+  max-width: 500px;
+}
+
+#closeAdmin {
+  margin-top: 10px;
+  background: #660000;
+}
