@@ -10,23 +10,33 @@
 </head>
 <body>
 
-  <!-- ШАПКА -->
-  <header>
-    <div class="header-content">
+ <!-- ШАПКА -->
+<header>
+  <div class="header-content">
+    <div class="header-left">
       <img src="door-icon.png" alt="Door Icon" class="logo">
       <h1>АИС "Заказ и установка дверей"</h1>
     </div>
-    <nav>
-      <ul>
-        <li><button class="nav-btn" data-page="welcome">Главная</button></li>
-        <li><button class="nav-btn" data-page="order">Сделать заказ</button></li>
-        <li><button class="nav-btn" data-page="view">Мои заказы</button></li>
-        <li><button class="nav-btn" data-page="support">Поддержка</button></li>
-        <li><button id="adminBtn">Администратор</button></li>
-        <li><button id="errorBtn">Ошибка</button></li>
-      </ul>
-    </nav>
-  </header>
+    <div id="userInfo" style="display: none;">
+      <div class="user-info-container">
+        <div>
+          <span id="userName"></span>
+          <span id="userRole" style="margin-left: 10px; font-size: 0.9em; padding: 2px 8px; border-radius: 10px;"></span>
+        </div>
+        <button id="logoutBtn" style="margin-left: 10px; font-size: 0.9em;">Выйти</button>
+      </div>
+    </div>
+  </div>
+  <nav>
+    <ul>
+      <li><button class="nav-btn" data-page="welcome">Главная</button></li>
+      <li><button class="nav-btn auth-required" data-page="order" style="display: none;">Сделать заказ</button></li>
+      <li><button class="nav-btn auth-required" data-page="view" style="display: none;">Мои заказы</button></li>
+      <li><button class="nav-btn" data-page="support">Поддержка</button></li>
+      <li><button id="adminBtn" style="display: none;">Администратор</button></li>
+    </ul>
+  </nav>
+</header>
 
   <main id="content">
 
@@ -39,85 +49,132 @@
 
       <div class="card auth-block">
         <h3>Авторизация</h3>
-        <form>
+        <form id="loginForm">
           <label>Логин:</label>
-          <input type="text" placeholder="Введите логин">
+          <input type="text" id="login" placeholder="Введите логин" required>
           <label>Пароль:</label>
-          <input type="password" placeholder="Введите пароль">
+          <input type="password" id="password" placeholder="Введите пароль" required>
           <button type="submit">Войти</button>
-          <p class="note">* демонстрационная форма</p>
+          <p>Нет аккаунта? <a href="#" id="showRegister">Зарегистрироваться</a></p>
+          <p class="note">* Тестовые данные: admin/1111, или user/1111, или worker/1111</p>
         </form>
       </div>
 
-      <div class="card order-block">
+      <div class="card order-block auth-required" style="display: none;">
         <h3>Сделать заказ</h3>
         <form>
           <label>Тип двери:</label>
-          <select>
+          <select required>
+            <option value="">Выберите тип</option>
             <option>Металлическая</option>
             <option>Деревянная</option>
             <option>Пластиковая</option>
           </select>
 
           <label>Размер (см):</label>
-          <input type="text" placeholder="200x90">
+          <input type="text" placeholder="200x90" required pattern="\d+x\d+">
+
+          <label>Дополнительное описание:</label>
+          <input type="text" placeholder="(К прим.) с бордовой обшивкой или стеклянная. Фурнитура, демонтаж старых дверей..." required maxlength="200">
 
           <label>Адрес установки:</label>
-          <input type="text" placeholder="г. Москва, ул. Примерная, д. 5">
+          <input type="text" placeholder="г. Москва, ул. Примерная, д. 5" required>
 
           <label>Способ оплаты:</label>
-          <select>
+          <select required>
+            <option value="">Выберите способ оплаты</option>
             <option>Наличные мастеру</option>
             <option>Безналичный перевод</option>
             <option>Переносная касса</option>
           </select>
+
+          <label>Номер телефона для связи или почта:</label>
+          <input type="text" placeholder="+7-999-123-45-67 или email@example.com" required>
 
           <button type="submit">Оформить заказ</button>
         </form>
       </div>
     </section>
 
-    <!-- СТРАНИЦА ЗАКАЗА (из меню) -->
+    <!-- СТРАНИЦА ЗАКАЗА -->
     <section id="order" class="page">
       <h2>Создать новый заказ</h2>
       <form class="card">
         <label>Тип двери:</label>
-        <select>
+        <select required>
+          <option value="">Выберите тип</option>
           <option>Металлическая</option>
           <option>Деревянная</option>
           <option>Пластиковая</option>
         </select>
 
         <label>Размер (см):</label>
-        <input type="text" placeholder="200x90">
+        <input type="text" placeholder="200x90" required pattern="\d+x\d+">
+
+        <label>Дополнительное описание:</label>
+        <input type="text" placeholder="(К прим.) с бордовой обшивкой или стеклянная. Фурнитура, демонтаж старых дверей..." required maxlength="200">
 
         <label>Адрес установки:</label>
-        <input type="text" placeholder="Введите адрес">
+        <input type="text" placeholder="Введите адрес" required>
 
-        <label>Дополнительно:</label>
-        <textarea placeholder="Фурнитура, демонтаж старых дверей..."></textarea>
+        <label>Способ оплаты:</label>
+        <select required>
+          <option value="">Выберите способ оплаты</option>
+          <option>Наличные мастеру</option>
+          <option>Безналичный перевод</option>
+          <option>Переносная касса</option>
+        </select>
+
+        <label>Номер телефона для связи или почта:</label>
+        <input type="text" placeholder="+7-999-123-45-67 или email@example.com" required>
 
         <button type="submit">Создать заказ</button>
       </form>
     </section>
 
-    <!-- ПРОСМОТР -->
+    <!-- ПРОСМОТР ЗАКАЗОВ -->
     <section id="view" class="page">
       <h2>Мои заказы</h2>
-      <form>
-        <label>Введите номер заказа:</label>
-        <input type="text" placeholder="ORD-001">
-        <button>Проверить</button>
-      </form>
-      <table>
-        <thead>
-          <tr><th>ID</th><th>Тип двери</th><th>Статус</th><th>Дата</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>ORD-123</td><td>Металлическая</td><td>В работе</td><td>10.11.2025</td></tr>
-          <tr><td>ORD-124</td><td>Деревянная</td><td>Установлена</td><td>08.11.2025</td></tr>
-        </tbody>
-      </table>
+      
+      <div class="card">
+        <h3>Поиск заказа</h3>
+        <form>
+          <label>Введите номер заказа:</label>
+          <input type="text" placeholder="ORD-001">
+          <button type="submit">Найти</button>
+          <button type="button" onclick="app.view.clearFilters()">Показать все</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>Фильтры</h3>
+        <select id="typeFilter">
+          <option value="">Все типы</option>
+          <option value="Металлическая">Металлическая</option>
+          <option value="Деревянная">Деревянная</option>
+          <option value="Пластиковая">Пластиковая</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <h3>Список заказов</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Тип двери</th>
+              <th>Описание</th>
+              <th>Адрес</th>
+              <th>Статус</th>
+              <th>Дата</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody">
+            <!-- Заказы будут загружены через JavaScript -->
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <!-- ПОДДЕРЖКА -->
@@ -125,37 +182,103 @@
       <h2>Служба поддержки</h2>
       <form class="card">
         <label>Ваше имя:</label>
-        <input type="text" placeholder="Введите имя">
+        <input type="text" placeholder="Введите имя" required>
         <label>Email:</label>
-        <input type="email" placeholder="Введите email">
+        <input type="email" placeholder="Введите email" required>
         <label>Сообщение:</label>
-        <textarea placeholder="Опишите проблему..."></textarea>
-        <button>Отправить сообщение</button>
+        <textarea placeholder="Опишите проблему..." required></textarea>
+        <button type="submit">Отправить сообщение</button>
       </form>
-    </section>
-
-    <!-- ОШИБКА -->
-    <section id="error" class="page">
-      <h2>Ошибка 404</h2>
-      <p>Страница не найдена. <a href="#" id="backHome">Вернуться на главную</a></p>
     </section>
 
   </main>
 
-  <!-- ПАНЕЛЬ АДМИНИСТРАТОРА -->
-  <div id="adminPanel">
-    <div class="admin-content">
-      <h2>Панель администратора</h2>
-      <form>
-        <label>Имя пользователя:</label>
-        <input type="text" placeholder="Введите имя">
-        <label>Email:</label>
-        <input type="email" placeholder="Введите email">
-        <button>Добавить</button>
-        <button>Редактировать</button>
-        <button>Удалить</button>
+  <!-- МОДАЛЬНОЕ ОКНО РЕГИСТРАЦИИ -->
+  <div id="registerModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close-modal" id="closeRegister">&times;</span>
+      <h3>Регистрация</h3>
+      <form id="registerForm">
+        <label>Имя:</label>
+        <input type="text" id="regName" placeholder="Введите ваше имя" required>
+        
+        <label>Логин:</label>
+        <input type="text" id="regLogin" placeholder="Введите логин" required>
+        
+        <label>Пароль:</label>
+        <input type="password" id="regPassword" placeholder="Введите пароль" required>
+        
+        <button type="submit">Зарегистрироваться</button>
       </form>
-      <button id="closeAdmin">Закрыть</button>
+    </div>
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ -->
+  <div id="editModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h3>Редактировать заказ</h3>
+      <form id="editOrderForm">
+        <input type="hidden" id="editOrderId">
+        
+        <label>Тип двери:</label>
+        <select id="editOrderType" required>
+          <option value="Металлическая">Металлическая</option>
+          <option value="Деревянная">Деревянная</option>
+          <option value="Пластиковая">Пластиковая</option>
+        </select>
+        
+        <label>Размер (см):</label>
+        <input type="text" id="editOrderSize" required pattern="\d+x\d+">
+        
+        <label>Описание:</label>
+        <textarea id="editOrderDescription" required maxlength="200"></textarea>
+        
+        <label>Адрес установки:</label>
+        <input type="text" id="editOrderAddress" required>
+        
+        <label>Способ оплаты:</label>
+        <select id="editOrderPayment" required>
+          <option value="Наличные мастеру">Наличные мастеру</option>
+          <option value="Безналичный перевод">Безналичный перевод</option>
+          <option value="Переносная касса">Переносная касса</option>
+        </select>
+        
+        <label>Контактные данные:</label>
+        <input type="text" id="editOrderContact" required>
+        
+        <label>Статус:</label>
+        <select id="editOrderStatus" required>
+          <option value="Новый">Новый</option>
+          <option value="В работе">В работе</option>
+          <option value="Завершено">Завершено</option>
+          <option value="Отменено">Отменено</option>
+        </select>
+        
+        <button type="submit">Сохранить изменения</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ПАНЕЛЬ АДМИНИСТРАТОРА -->
+  <div id="adminPanel" class="modal">
+    <div class="modal-content admin-panel">
+      <span class="close-modal" id="closeAdmin">&times;</span>
+      <h2>Панель администратора</h2>
+      
+      <div class="admin-section">
+        <h3>Управление пользователями</h3>
+        <div id="adminUsersList" class="users-list">
+          <!-- Список пользователей -->
+        </div>
+      </div>
+      
+      <div class="admin-section">
+        <h3>Все заказы</h3>
+        <div id="adminOrdersList" class="orders-list">
+          <!-- Все заказы -->
+        </div>
+      </div>
     </div>
   </div>
 
@@ -163,37 +286,94 @@
     <p>© 2025 АИС "Заказ и установка дверей". Все права защищены.</p>
   </footer>
 
-  <script>
+  <script src="script.js"></script>
+
+<script>
+    // Навигация между страницами
     const pages = document.querySelectorAll('.page');
     const navBtns = document.querySelectorAll('.nav-btn');
-    const errorSection = document.getElementById('error');
 
     navBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const page = btn.dataset.page;
-        pages.forEach(p => p.classList.remove('active'));
-        document.getElementById(page).classList.add('active');
-      });
-    });
+        btn.addEventListener('click', () => {
+            const page = btn.dataset.page;
+            pages.forEach(p => p.classList.remove('active'));
+            document.getElementById(page).classList.add('active');
+            
+            // ПЕРЕИНИЦИАЛИЗИРУЕМ ФОРМЫ ПРИ КАЖДОМ ПЕРЕКЛЮЧЕНИИ СТРАНИЦ
+            setTimeout(() => {
+                if (app && app.view && app.view._reinitForms) {
+                    app.view._reinitForms();
+                }
+            }, 100);
+            
+            // ОБНОВЛЯЕМ КОНТЕНТ ПРИ ПЕРЕКЛЮЧЕНИИ СТРАНИЦ
+            if (page === 'view') {
+                if (app && app.view) {
 
-    const adminPanel = document.getElementById('adminPanel');
-    document.getElementById('adminBtn').addEventListener('click', () => {
-      adminPanel.classList.add('visible');
-    });
-    document.getElementById('closeAdmin').addEventListener('click', () => {
-      adminPanel.classList.remove('visible');
-    });
+const searchInput = document.querySelector('#view input[type="text"][placeholder*="номер заказа"]');
 
-    document.getElementById('errorBtn').addEventListener('click', () => {
-      pages.forEach(p => p.classList.remove('active'));
-      errorSection.classList.add('active');
+        if(searchInput){
+            searchInput.value='';
+        }
+                  app.view.clearFilters();
+
+
+
+                    app.view.renderOrders();
+                }
+            } else if (page === 'welcome' && app && app.view && app.userManager.isWorker()) {
+                app.view.renderWorkerOrders();
+            }
+        });
     });
-    document.getElementById('backHome').addEventListener('click', (e) => {
-      e.preventDefault();
-      errorSection.classList.remove('active');
-      document.getElementById('welcome').classList.add('active');
-    });
-  </script>
+</script>
+
+
+<!-- Модальное окно редактирования пользователя -->
+<div id="editUserModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h3>Редактировать пользователя</h3>
+        <form id="editUserForm">
+            <input type="hidden" id="editUserId">
+            
+            <label>Имя:</label>
+            <input type="text" id="editUserName" required>
+            
+            <label>Логин:</label>
+            <input type="text" id="editUserLogin" required>
+            
+            <label>Пароль:</label>
+            <input type="password" id="editUserPassword" required>
+            
+            <label>Роль:</label>
+            <select id="editUserRole" required>
+                <option value="user">Пользователь</option>
+                <option value="worker">Работник</option>
+                <option value="admin">Администратор</option>
+            </select>
+            
+            <button type="submit">Сохранить изменения</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+<!-- Модальное окно успешного создания заказа -->
+<div id="successModal" class="modal success-modal" style="display: none;">
+  <div class="modal-content">
+    <span class="close-modal" id="closeSuccess">&times;</span>
+    <div class="success-icon">✅</div>
+    <h3>Заказ успешно создан!</h3>
+    <p>Ваш заказ был успешно оформлен и добавлен в систему.</p>
+    <button onclick="app.view.hideSuccessModal()">Просмотреть заказ</button>
+  </div>
+</div>
+
+
 
 </body>
 </html>
